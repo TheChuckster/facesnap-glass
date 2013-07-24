@@ -1,5 +1,6 @@
 TARGET = facesnap
 CUDA_PATH=/opt/cuda/lib64/
+X11_LIB_PATH=/usr/X11R6/lib/
 
 SRC_DIR = src
 CUDA_SRC_DIR = cuda
@@ -12,7 +13,7 @@ RM = rm -f
 NVCCFLAGS = -arch sm_20
 CPPFLAGS = -Wall -march=native -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -g -fvar-tracking-assignments -D_FORTIFY_SOURCE=2 -std=c++11 -I./$(CUDA_SRC_DIR)
 LDFLAGS = -Wall -Wl,-O1,--sort-common,--as-needed,-z,relro
-LDLIBS = -lm -lcuda -lcudart -L$(CUDA_PATH)
+LDLIBS = -L$(X11_LIB_PATH) -L$(CUDA_PATH) -lm -lpthread -lX11 -lcuda -lcudart
 
 CPPFLAGS += `pkg-config --cflags opencv` 
 LDLIBS += `pkg-config --libs opencv`
